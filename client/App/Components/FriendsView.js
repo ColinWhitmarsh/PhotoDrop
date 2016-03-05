@@ -56,6 +56,14 @@ class FriendsView extends React.Component{
           foundUsers.splice(i, 1);
       })
 
+      _.each(foundUsers, (foundUser) => {
+        _.each(this.state.friends, (friend) => {
+          if(friend._id === foundUser._id) {
+            foundUser.friend = true;
+          }
+        })
+      })
+
       this.setState({
         foundUsers: foundUsers
       })
@@ -67,6 +75,7 @@ class FriendsView extends React.Component{
       if (err) {
         console.error(err)
       } else {
+        this.fetchUserFriends();
         console.log('friend added');
       }
     })
@@ -105,6 +114,10 @@ class FriendsView extends React.Component{
         </View>
       )
     }) 
+  }
+
+  removeFriend() {
+    // make an api call
   }
 
   componentDidMount() {
