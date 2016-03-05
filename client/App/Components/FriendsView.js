@@ -83,14 +83,25 @@ class FriendsView extends React.Component{
 
   renderFoundUsers(foundUsers) {
     return foundUsers.map((user, index) => {
-      return (
-        <View style={styles.foundUserRow} key={user._id}>
-          <Text style={styles.foundUser}>{user.username}</Text>
-          <TouchableHighlight onPress={() => {this.addFoundUserAsFriend.bind(this)(user._id)}} style={styles.buttonBorder} underlayColor={'#FC9396'}>
-            <IconIon name="ios-plus-empty" size={53} color="#FF5A5F" style={styles.addFriendIcon} />
-          </TouchableHighlight>
-        </View>
-      )
+      if (!user.friend) {
+        return (
+          <View style={styles.foundUserRow} key={user._id}>
+            <Text style={styles.foundUser}>{user.username}</Text>
+            <TouchableHighlight onPress={() => {this.addFoundUserAsFriend.bind(this)(user._id)}} style={styles.addButtonBorder} underlayColor={'#FC9396'}>
+                  <IconIon name="ios-plus-empty" size={53} color="#FF5A5F" style={styles.addFriendIcon} /> 
+            </TouchableHighlight>
+          </View>
+        )
+      } else {
+        return (
+          <View style={styles.foundUserRow} key={user._id}>
+            <Text style={styles.foundUser}>{user.username}</Text>
+            <TouchableHighlight onPress={() => {this.addFoundUserAsFriend.bind(this)(user._id)}} style={styles.checkmarkButtonBorder} underlayColor={'#FC9396'}>
+                  <IconIon name="ios-checkmark-empty" size={53} color="#036C69" style={styles.addFriendIcon} />
+            </TouchableHighlight>
+          </View>
+        )
+      }
     })
   }
 
@@ -108,7 +119,7 @@ class FriendsView extends React.Component{
       return (
         <View style={styles.foundUserRow} key={friend._id}>
           <Text style={styles.foundUser}>{friend.username}</Text>
-          <TouchableHighlight onPress={() => {}} style={styles.buttonBorder} underlayColor={'#FC9396'}>
+          <TouchableHighlight onPress={() => {}} style={styles.addButtonBorder} underlayColor={'#FC9396'}>
             <IconIon name="ios-close-empty" size={53} color="#FF5A5F" style={styles.addFriendIcon} />
           </TouchableHighlight>
         </View>
@@ -295,7 +306,7 @@ var styles = StyleSheet.create({
     textAlign: 'left',
     color: '#616161'
   },
-  buttonBorder: {
+  addButtonBorder: {
     width: 50,
     height: 50,
     alignSelf: 'flex-end',
@@ -306,6 +317,18 @@ var styles = StyleSheet.create({
     borderWidth: 2,
     margin: 10,
     borderColor: '#FF5A5F'
+  },
+  checkmarkButtonBorder: {
+    width: 50,
+    height: 50,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    borderRadius: 35,
+    borderWidth: 2,
+    margin: 10,
+    borderColor: '#036C69'
   },
   noFriendsText: {
     marginTop: 65,
